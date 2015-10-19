@@ -15,12 +15,6 @@ describe Oystercard do
     end
   end
 
-  context 'Spending money' do
-    it 'deducts money from the card when make a journey' do
-      expect{subject.deduct(10)}.to change{subject.balance}.by(-10)
-    end
-  end
-
   context 'Making journeys' do
     it 'displays the journey status, initialized as false' do
       expect(subject.in_journey?).to eq false
@@ -31,13 +25,14 @@ describe Oystercard do
       expect(subject.touch_in).to eq true
     end
 
-    it 'changes in_journey to false when touch_out is invoked' do
-      expect(subject.touch_out).to eq false
-    end
-
     it 'raises an error if balance is £1 or less when touch_in invoked' do
       expect{subject.touch_in}.to raise_error "Insufficient balance"
     end
+
+    it 'deducts the minimum fare when touch_out is invoked' do
+      expect{subject.touch_out}.to change{subject.balance}.by(-Oystercard::MINIMUM_FARE)
+    end
+
   end
 
 
