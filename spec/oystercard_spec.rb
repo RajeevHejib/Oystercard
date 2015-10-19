@@ -27,12 +27,18 @@ describe Oystercard do
     end
 
     it 'changes in_journey to true when touch_in is invoked' do
+      allow(subject).to receive(:balance).and_return(Oystercard::MINIMUM_FARE)
       expect(subject.touch_in).to eq true
     end
 
     it 'changes in_journey to false when touch_out is invoked' do
       expect(subject.touch_out).to eq false
     end
+
+    it 'raises an error if balance is £1 or less when touch_in invoked' do
+      expect{subject.touch_in}.to raise_error "Insufficient balance"
+    end
   end
+
 
 end
