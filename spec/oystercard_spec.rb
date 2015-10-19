@@ -21,4 +21,18 @@ describe Oystercard do
     end
   end
 
+  context 'Making journeys' do
+    it 'displays the journey status, initialized as false' do
+      expect(subject.in_journey?).to eq false
+    end
+
+    it 'changes in_journey to true when touch_in is invoked' do
+      expect(subject.touch_in).to eq true
+    end
+
+    it 'changes in_journey to false when touch_out is invoked' do
+      expect(subject.touch_out).to eq false
+    end
+  end
+
 end
